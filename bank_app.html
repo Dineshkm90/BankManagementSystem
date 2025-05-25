@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> DASS Bank</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+   
+</head>
+<body>
+    <h2>WElCOME TO LOGIN PAGE</h2>
+    <div class="back-ground">
+    <div class="container">
+
+        <h2> DASS Bank</h2>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for message in messages %}
+                <p>{{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        {% if page == 'register' %}
+            <h3>Register</h3>
+            <form method="post">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="submit" value="Register">
+            </form>
+            <a href="/login">Already registered? Login</a>
+
+        {% elif page == 'login' %}
+            <h3>Login</h3>
+            <form method="post">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="submit" value="Login">
+            </form>
+            <a href="/register">No account? Register</a>
+
+        {% elif page == 'dashboard' %}
+            <h3>Welcome, {{ user['name'] }}</h3>
+            <div class="dashboard">
+                <p><strong>Account No:</strong> {{ user['account_number'] }}</p>
+                <p><strong>Available Balance:</strong> ₹{{ user['balance'] }}</p>
+                <ul>
+                    <li><a href="/transaction">Make a Transaction</a></li>
+                    <li><a href="/history">View History</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+
+        {% elif page == 'transaction' %}
+            <h3>Transaction</h3>
+            <form method="post">
+                <select name="type">
+                    <option value="deposit">Deposit</option>
+                    <option value="withdraw">Withdraw</option>
+                </select>
+                <input type="number" name="amount" step="0.01" placeholder="Amount" required>
+                <input type="submit" value="Submit Transaction">
+            </form>
+            <a href="/dashboard">← Back to Dashboard</a>
+
+        {% elif page == 'history' %}
+            <h3>Transaction History</h3>
+            <table>
+                <tr><th>Type</th><th>Amount</th><th>Date</th></tr>
+                {% for t in history %}
+                <tr>
+                    <td>{{ 'Credited' if t['type'] == 'deposit' else 'Debited' }}</td>
+                    <td>₹{{ t['amount'] }}</td>
+                    <td>{{ t['date'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <a href="/dashboard">← Back to Dashboard</a>
+        {% endif %}
+    </div>
+        </div>
+        </div>
+
+<div class="Base-Styling d-flex flex-column justify-content-end">
+<section class="rates-section">
+    <div class="header">
+      <h1>Rates & Charges</h1>
+      <a href="#" class="view-link">View All Interest Rates →</a>
+      <p class="subheading">Check out our competitive rates and service charge for different types of loans.</p>
+    </div>
+    <div class="cards-container">
+      <div class="loan-card">
+        <img src="https://www.bankofbaroda.in/-/media/project/bob/countrywebsites/india/home/bhloan.svg?iar=0&hash=DB447D5E9A46E51C7EDC31E3DD8F694A" alt="Home Loan Icon" />
+        <h2>8.00% <span>P.A.*</span></h2>
+        <p class="loan-type">DASS Bank Home Loan</p>
+      </div>
+      <div class="loan-card">
+        <img src="https://www.bankofbaroda.in/-/media/project/bob/countrywebsites/india/home/bcloan.svg?iar=0&hash=05823B2B2F9045B4775CCDCA46E6EA10" alt="Car Loan Icon" />
+        <h2>8.80% <span>P.A.*</span></h2>
+        <p class="loan-type">DASS Bank Car Loan</p>
+      </div>
+      <div class="loan-card">
+        <img src="https://www.bankofbaroda.in/-/media/project/bob/countrywebsites/india/home/beloan.svg?iar=0&hash=6CA7E15EEC66AEE8D660120E12B60FA7" alt="Education Loan Icon" />
+        <h2>7.60% <span>P.A.*</span></h2>
+        <p class="loan-type">DASS Bank Education Loan</p>
+      </div>
+      <div class="loan-card">
+        <img src="https://www.bankofbaroda.in/-/media/project/bob/countrywebsites/india/home/bploan.svg?iar=0&hash=B4766E8798AF5005823B9A4394F117A2" alt="Personal Loan Icon" />
+        <h2>10.90% <span>P.A.*</span></h2>
+        <p class="loan-type">DASS Bank Personal Loan</p>
+      </div>
+    </div>
+    <p class="footer-note">* APR as Low and T&C Apply</p>
+  </section>
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>
